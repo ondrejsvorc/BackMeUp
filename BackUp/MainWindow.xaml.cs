@@ -38,11 +38,11 @@ namespace BackUp
 
         DispatcherTimer timer = new DispatcherTimer();
         FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+
         NotifyIcon notifyIcon;
 
         NotificationManager notificationManager = new NotificationManager();
         NotificationContent notificationBackingUp;
-        NotificationContent notificationBackingUpSuccess;
         NotificationContent notificationBackingUpFailure;
 
         bool backingUp;

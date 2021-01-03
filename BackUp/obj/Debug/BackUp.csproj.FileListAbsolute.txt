@@ -16,3 +16,21 @@ C:\Users\Ondra\source\repos\BackUp\BackUp\obj\Debug\BackUp.pdb
 C:\Users\Ondra\source\repos\BackUp\BackUp\obj\Debug\App.baml
 C:\Users\Ondra\source\repos\BackUp\BackUp\bin\Debug\Notifications.Wpf.dll
 C:\Users\Ondra\source\repos\BackUp\BackUp\obj\Debug\BackUp.csproj.CopyComplete
+D:\GitHub Projects\BackMeUp\BackUp\bin\Debug\BackUp.exe.config
+D:\GitHub Projects\BackMeUp\BackUp\bin\Debug\BackUp.exe
+D:\GitHub Projects\BackMeUp\BackUp\bin\Debug\BackUp.pdb
+D:\GitHub Projects\BackMeUp\BackUp\bin\Debug\Notifications.Wpf.dll
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp.csprojAssemblyReference.cache
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\MainWindow.g.cs
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\App.g.cs
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp_MarkupCompile.cache
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp_MarkupCompile.lref
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\App.baml
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\MainWindow.baml
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp.g.resources
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp.Properties.Resources.resources
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp.csproj.GenerateResource.cache
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp.csproj.CoreCompileInputs.cache
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp.csproj.CopyComplete
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp.exe
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp.pdb
