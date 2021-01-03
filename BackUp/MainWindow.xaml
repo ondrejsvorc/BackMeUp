@@ -184,7 +184,7 @@
                     Foreground="White" />
 
                 <TextBox
-                    x:Name="txtBoxDirName"
+                    x:Name="txtBoxLastBackup"
                     Grid.Row="7"
                     Grid.Column="2"
                     HorizontalContentAlignment="Left"
