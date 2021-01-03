@@ -21,6 +21,9 @@ using System.Collections;
 
 namespace BackUp
 {
+
+    // DOESN'T WORK, DO IT BETTER
+
     public class Settings
     {
         //private static string _source;
@@ -162,7 +165,8 @@ namespace BackUp
 
         private void WindowClose(object sender, MouseButtonEventArgs e)
         {
-            Settings.Save(txtBoxSource.Text, txtBoxDestination.Text, Convert.ToDouble(txtBoxInterval.Text), txtBoxLastBackup.Text);
+            // DOESN'T WORK, DO IT BETTER
+            //Settings.Save(txtBoxSource.Text, txtBoxDestination.Text, Convert.ToDouble(txtBoxInterval.Text), txtBoxLastBackup.Text);
             Application.Current.Shutdown();
         }
 
@@ -242,7 +246,5 @@ namespace BackUp
             timer.Interval = TimeSpan.FromSeconds(Convert.ToDouble(txtBoxInterval.Text));
             lbIntervalCurrent.Content = $"Interval is now set to {txtBoxInterval.Text} seconds.";
         }
-
-
     }
 }
