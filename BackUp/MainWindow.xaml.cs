@@ -23,13 +23,16 @@ namespace BackUp
 {
     public class Settings
     {
-        private static string _source;
-        private static string _destination;
-        private static double _interval;
-        private static string _lastBackup;
+        //private static string _source;
+        //private static string _destination;
+        //private static double _interval;
+        //private static string _lastBackup;
 
-        private Settings()
+        private static string _projectDir;
+
+        public Settings(string projectDir)
         {
+            _projectDir = projectDir;
         }
 
         public static void Save(string source, string destination, double interval, string lastBackup)
@@ -42,6 +45,8 @@ namespace BackUp
                 lastBackup
             };
 
+            Directory.SetCurrentDirectory(_projectDir);
+
             if (!File.Exists("settings.txt"))
             {
                 File.Create("settings.txt");
@@ -51,7 +56,7 @@ namespace BackUp
             {
                 foreach (var settingsAtribute in settingsAtributes)
                 {
-                    file.WriteLine(settingsAtributes.ToString());
+                    file.WriteLine(settingsAtribute.ToString());
                 }
             }
 
@@ -110,6 +115,9 @@ namespace BackUp
         public MainWindow()
         {
             InitializeComponent();
+
+            string projectDir = Directory.GetCurrentDirectory();
+            Settings settings = new Settings(projectDir);
 
             notificationBackingUp = new NotificationContent
             {
