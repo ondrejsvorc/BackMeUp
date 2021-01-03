@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:BackUp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="window"
     Title="Back me up"
     Width="800"
     Height="450"
@@ -132,7 +133,6 @@
                     VerticalContentAlignment="Center"
                     Background="#FF707070"
                     Foreground="White"
-                    GotFocus="GetTxtBox"
                     IsReadOnly="True" />
 
                 <TextBox
@@ -143,7 +143,6 @@
                     VerticalContentAlignment="Center"
                     Background="#FF707070"
                     Foreground="White"
-                    GotFocus="GetTxtBox"
                     IsReadOnly="True" />
 
                 <Button

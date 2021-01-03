@@ -14,3 +14,5 @@ C:\Users\Ondra\source\repos\BackUp\BackUp\obj\Debug\BackUp.csproj.CoreCompileInp
 C:\Users\Ondra\source\repos\BackUp\BackUp\obj\Debug\BackUp.exe
 C:\Users\Ondra\source\repos\BackUp\BackUp\obj\Debug\BackUp.pdb
 C:\Users\Ondra\source\repos\BackUp\BackUp\obj\Debug\App.baml
+C:\Users\Ondra\source\repos\BackUp\BackUp\bin\Debug\Notifications.Wpf.dll
+C:\Users\Ondra\source\repos\BackUp\BackUp\obj\Debug\BackUp.csproj.CopyComplete

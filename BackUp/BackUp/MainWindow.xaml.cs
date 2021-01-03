@@ -12,8 +12,11 @@ using System.Windows.Forms;
 using TextBox = System.Windows.Controls.TextBox;
 using Button = System.Windows.Controls.Button;
 using MessageBox = System.Windows.MessageBox;
+using Application = System.Windows.Application;
 using System.Text.RegularExpressions;
 using System.Windows.Threading;
+using Notifications.Wpf;
+using System.Drawing;
 
 namespace BackUp
 {
@@ -35,16 +38,52 @@ namespace BackUp
 
         DispatcherTimer timer = new DispatcherTimer();
         FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+        NotifyIcon notifyIcon;
 
-        object prefixTo;
+        NotificationManager notificationManager = new NotificationManager();
+        NotificationContent notificationBackingUp;
+        NotificationContent notificationBackingUpSuccess;
+        NotificationContent notificationBackingUpFailure;
+
         bool backingUp;
+        int backUpNumber = 0;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            prefixTo = txtBoxSource;
+            notificationBackingUp = new NotificationContent
+            {
+                Title = "Backing up...",
+                Message = $"Backup number: {++backUpNumber}",
+                Type = NotificationType.Information
+            };
+
+            notificationBackingUpSuccess = new NotificationContent
+            {
+                Title = "Backing up complete.",
+                Type = NotificationType.Success
+            };
+
+            notificationBackingUpFailure = new NotificationContent
+            {
+                Title = "Backing up failed.",
+                Message = "Please, check whether the source and destination path exist.",
+                Type = NotificationType.Error
+            };
+
             timer.Tick += BackUp;
+
+            notifyIcon = new NotifyIcon();
+            notifyIcon.Icon = Properties.Resources.BackMeUp_Icon;
+            notifyIcon.MouseDoubleClick += WindowShow;
+        }
+
+        private void WindowShow(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            this.Show();
+            notifyIcon.Visible = false;
+            WindowState = WindowState.Normal;
         }
 
         private void WindowMove(object sender, MouseButtonEventArgs e)
@@ -55,21 +94,14 @@ namespace BackUp
         private void WindowMinimize(object sender, MouseButtonEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
+
+            this.Hide();
+            notifyIcon.Visible = true;
         }
 
         private void WindowClose(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
-        }
-
-        private void AddPrefix(object sender, RoutedEventArgs e)
-        {
-            ((TextBox)prefixTo).Text += ((Button)sender).Content.ToString();
-        }
-
-        private void GetTxtBox(object sender, RoutedEventArgs e)
-        {
-            prefixTo = (TextBox)sender;
+            Application.Current.Shutdown();
         }
 
         private void FileSourcePath(object sender, RoutedEventArgs e)
@@ -117,6 +149,8 @@ namespace BackUp
             {
                 if (Directory.Exists(dirSource))
                 {
+                    notificationManager.Show(notificationBackingUp);
+
                     txtBoxDirName.Text = dirName + $" - {DateTime.Now:dd/MM/yy HH-mm-ss}"; 
 
                     Directory.CreateDirectory(dirBackUpName);
@@ -128,10 +162,12 @@ namespace BackUp
                     {
                         File.Copy(file, $"{Path.GetFileName(file)}", true);
                     }
+
+                    notificationManager.Show(notificationBackingUpSuccess);
                 }
                 else
                 {
-                    MessageBox.Show("Folder you want to backup doesn't exist.");
+                    notificationManager.Show(notificationBackingUpFailure);
                 }
             }
         }
