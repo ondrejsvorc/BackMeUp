@@ -69,7 +69,7 @@
                     Width="60"
                     Height="20"
                     Background="#FF707070"
-                    Click="SettingsMenuOpen"
+                    Click="SettingsWindowOpen"
                     Foreground="White"
                     Header="Settings"
                     Template="{DynamicResource MenuItemSettings}" />

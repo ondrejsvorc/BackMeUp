@@ -268,7 +268,7 @@ namespace BackUp
                     this.menuItemSettings = ((System.Windows.Controls.MenuItem)(target));
 
 #line 74 "..\..\MainWindow.xaml"
-                    this.menuItemSettings.Click += new System.Windows.RoutedEventHandler(this.SettingsMenuOpen);
+                    this.menuItemSettings.Click += new System.Windows.RoutedEventHandler(this.SettingsWindowOpen);
 
 #line default
 #line hidden

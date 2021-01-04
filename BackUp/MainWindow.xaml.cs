@@ -242,7 +242,7 @@ namespace BackUp
             backUpNum = Properties.Settings.Default.backUpNum;
         }
 
-        private void SettingsMenuOpen(object sender, RoutedEventArgs e)
+        private void SettingsWindowOpen(object sender, RoutedEventArgs e)
         {
             Settings settings = new Settings();
             settings.Show();
