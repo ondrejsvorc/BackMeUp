@@ -37,7 +37,9 @@ namespace BackUp
          * RUN IN BACKGROUND
         */
 
-        DispatcherTimer timer = new DispatcherTimer();
+        DispatcherTimer timerBackingUp = new DispatcherTimer();
+        DispatcherTimer timerEverythingInOrder = new DispatcherTimer();
+
         FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
 
         NotifyIcon notifyIcon;
@@ -54,10 +56,14 @@ namespace BackUp
             InitializeComponent();
             LoadSettings();
 
+            timerEverythingInOrder.Interval = TimeSpan.FromMilliseconds(100);
+            timerEverythingInOrder.Tick += IsEverythingInOrder;
+            timerEverythingInOrder.Start();
+
             notificationBackingUp = new NotificationContent
             {
                 Title = "Backing up...",
-                Message = $"Backup number: {++backUpNumber}",
+                Message = $"Backup number: {++Properties.Settings.Default.backUpNum}",
                 Type = NotificationType.Information
             };
 
@@ -68,11 +74,47 @@ namespace BackUp
                 Type = NotificationType.Error
             };
 
-            timer.Tick += BackUp;
+            timerBackingUp.Tick += BackUp;
 
             notifyIcon = new NotifyIcon();
             notifyIcon.Icon = Properties.Resources.BackMeUp_Icon;
             notifyIcon.MouseDoubleClick += WindowShow;
+        }
+
+        private void IsEverythingInOrder(object sender, EventArgs e)
+        {
+            bool inOrder = true;
+
+            if (!Directory.Exists(txtBoxSource.Text))
+            {
+                lbErrorMessage.Content = "Enter a valid SOURCE path.";
+                inOrder = false;
+            }
+            else if (!Directory.Exists(txtBoxDestination.Text))
+            {
+                lbErrorMessage.Content = "Enter a valid DESTINATION path.";
+                inOrder = false;
+            }
+
+            if (!Directory.Exists(txtBoxSource.Text) && !Directory.Exists(txtBoxDestination.Text))
+            {
+                lbErrorMessage.Content = "Enter a valid SOURCE and DESTINATION path.";
+                inOrder = false;
+            }
+
+            if (txtBoxInterval.Text == string.Empty)
+            {
+                lbErrorMessage.Content = "You must enter backing up INTERVAL.";
+                inOrder = false;
+            }
+
+            if (Directory.Exists(txtBoxSource.Text) && Directory.Exists(txtBoxDestination.Text) && txtBoxInterval.Text != string.Empty)
+            {
+                lbErrorMessage.Content = string.Empty;
+            }
+
+            toggleBtnBackUpState.IsEnabled = inOrder;
+            toggleBtnBackUpState.IsChecked = inOrder;
         }
 
         private void WindowShow(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -118,17 +160,16 @@ namespace BackUp
             if ((bool)toggleBtnBackUpState.IsChecked)
             {
                 backingUp = true;
-                timer.Interval = TimeSpan.FromSeconds(Convert.ToDouble(txtBoxInterval.Text));
-                timer.Start();
+                timerBackingUp.Interval = TimeSpan.FromSeconds(Convert.ToDouble(txtBoxInterval.Text));
+                timerBackingUp.Start();
 
                 lbBackUpState.Content = "Backing up is now turned on";
-                lbIntervalCurrent.Content = $"Interval is now set to {txtBoxInterval.Text} seconds";
                 toggleBtnBackUpState.Content = "Backup off";
             }
             else
             {
                 backingUp = false;
-                timer.Stop();
+                timerBackingUp.Stop();
 
                 lbBackUpState.Content = "Backing up is now turned off";
                 toggleBtnBackUpState.Content = "Backup on";
@@ -172,17 +213,20 @@ namespace BackUp
             e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
         }
 
-        private void IntervalRefresh(object sender, RoutedEventArgs e)
-        {
-            timer.Interval = TimeSpan.FromSeconds(Convert.ToDouble(txtBoxInterval.Text));
-            lbIntervalCurrent.Content = $"Interval is now set to {txtBoxInterval.Text} seconds.";
-        }
-
         private void SaveSettings()
         {
             Properties.Settings.Default.source = txtBoxSource.Text;
             Properties.Settings.Default.destination = txtBoxDestination.Text;
-            Properties.Settings.Default.interval = Convert.ToDouble(txtBoxInterval.Text);
+
+            if (txtBoxInterval.Text != string.Empty)
+            {
+                Properties.Settings.Default.interval = Convert.ToDouble(txtBoxInterval.Text);
+            }
+            else
+            {
+                Properties.Settings.Default.interval = 0;
+            }
+
             Properties.Settings.Default.lastBackup = txtBoxLastBackup.Text;
 
             Properties.Settings.Default.Save();
@@ -194,6 +238,20 @@ namespace BackUp
             txtBoxDestination.Text = Properties.Settings.Default.destination;
             txtBoxInterval.Text = Properties.Settings.Default.interval.ToString();
             txtBoxLastBackup.Text = Properties.Settings.Default.lastBackup;
+        }
+
+        private void IntervalUpdate(object sender, TextChangedEventArgs e)
+        {
+            if ((bool)toggleBtnBackUpState.IsChecked)
+            {
+                lbIntervalCurrent.Content = "Updating interval...";
+            }
+
+            if (txtBoxInterval.Text != string.Empty)
+            {
+                timerBackingUp.Interval = TimeSpan.FromSeconds(Convert.ToDouble(txtBoxInterval.Text));
+                lbIntervalCurrent.Content = $"Interval is now set to {txtBoxInterval.Text} seconds.";
+            }
         }
     }
 }

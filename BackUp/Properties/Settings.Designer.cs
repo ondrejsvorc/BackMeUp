@@ -70,5 +70,17 @@ namespace BackUp.Properties {
                 this["lastBackup"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int backUpNum {
+            get {
+                return ((int)(this["backUpNum"]));
+            }
+            set {
+                this["backUpNum"] = value;
+            }
+        }
     }
 }
