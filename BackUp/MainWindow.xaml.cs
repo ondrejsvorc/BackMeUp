@@ -21,72 +21,6 @@ using System.Collections;
 
 namespace BackUp
 {
-
-    // DOESN'T WORK, DO IT BETTER
-
-    public class Settings
-    {
-        //private static string _source;
-        //private static string _destination;
-        //private static double _interval;
-        //private static string _lastBackup;
-
-        private static string _projectDir;
-
-        public Settings(string projectDir)
-        {
-            _projectDir = projectDir;
-        }
-
-        public static void Save(string source, string destination, double interval, string lastBackup)
-        {
-            ArrayList settingsAtributes = new ArrayList()
-            {
-                source, 
-                destination, 
-                interval, 
-                lastBackup
-            };
-
-            Directory.SetCurrentDirectory(_projectDir);
-
-            if (!File.Exists("settings.txt"))
-            {
-                File.Create("settings.txt");
-            }
-
-            using (StreamWriter file = new StreamWriter("settings.txt"))
-            {
-                foreach (var settingsAtribute in settingsAtributes)
-                {
-                    file.WriteLine(settingsAtribute.ToString());
-                }
-            }
-
-            //_source = source;
-            //_destination = destination;
-            //_interval = interval;
-            //_lastBackup = lastBackup;
-        }
-
-        public void Load(string source, string destination, double interval, string lastBackup, DispatcherTimer timer)
-        {
-            //source = ;
-            //_destination = destination;
-            //_interval = interval;
-            //_lastBackup = lastBackup;
-        }
-
-        //private void SaveSettings(string source, string destination, double interval, string lastBackup)
-        //{
-        //    source = txtBoxSource.Text;
-        //    destination = txtBoxDestination.Text;
-        //    interval = Convert.ToDouble(txtBoxInterval.Text);
-        //    lastBackup = txtBoxLastBackup.Text;
-        //}
-    }
-
-
     public partial class MainWindow : Window
     {
         //TO-DO:
@@ -118,9 +52,7 @@ namespace BackUp
         public MainWindow()
         {
             InitializeComponent();
-
-            string projectDir = Directory.GetCurrentDirectory();
-            Settings settings = new Settings(projectDir);
+            LoadSettings();
 
             notificationBackingUp = new NotificationContent
             {
@@ -165,8 +97,7 @@ namespace BackUp
 
         private void WindowClose(object sender, MouseButtonEventArgs e)
         {
-            // DOESN'T WORK, DO IT BETTER
-            //Settings.Save(txtBoxSource.Text, txtBoxDestination.Text, Convert.ToDouble(txtBoxInterval.Text), txtBoxLastBackup.Text);
+            SaveSettings();
             Application.Current.Shutdown();
         }
 
@@ -245,6 +176,24 @@ namespace BackUp
         {
             timer.Interval = TimeSpan.FromSeconds(Convert.ToDouble(txtBoxInterval.Text));
             lbIntervalCurrent.Content = $"Interval is now set to {txtBoxInterval.Text} seconds.";
+        }
+
+        private void SaveSettings()
+        {
+            Properties.Settings.Default.source = txtBoxSource.Text;
+            Properties.Settings.Default.destination = txtBoxDestination.Text;
+            Properties.Settings.Default.interval = Convert.ToDouble(txtBoxInterval.Text);
+            Properties.Settings.Default.lastBackup = txtBoxLastBackup.Text;
+
+            Properties.Settings.Default.Save();
+        }
+
+        private void LoadSettings()
+        {
+            txtBoxSource.Text = Properties.Settings.Default.source;
+            txtBoxDestination.Text = Properties.Settings.Default.destination;
+            txtBoxInterval.Text = Properties.Settings.Default.interval.ToString();
+            txtBoxLastBackup.Text = Properties.Settings.Default.lastBackup;
         }
     }
 }
