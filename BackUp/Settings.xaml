@@ -1,0 +1,29 @@
+﻿<Window
+    x:Class="BackUp.Settings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:BackUp"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="windowSettings"
+    Title="Settings"
+    Width="600"
+    Height="500"
+    AllowsTransparency="True"
+    Background="Transparent"
+    FontFamily="Microsoft YaHei Light"
+    FontSize="16"
+    Foreground="White"
+    MouseDown="WindowMove"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Border
+        Background="#FF1E1E1E"
+        BorderBrush="#FF686868"
+        BorderThickness="2"
+        CornerRadius="25"
+        Opacity="0.9">
+        <Grid />
+
+    </Border>
+</Window>

@@ -49,12 +49,12 @@ namespace BackUp
         NotificationContent notificationBackingUpFailure;
 
         bool backingUp;
-        int backUpNumber = 0;
+        int backUpNum = 0;
 
         public MainWindow()
         {
             InitializeComponent();
-            LoadSettings();
+            SettingsLoad();
 
             timerEverythingInOrder.Interval = TimeSpan.FromMilliseconds(100);
             timerEverythingInOrder.Tick += IsEverythingInOrder;
@@ -63,7 +63,7 @@ namespace BackUp
             notificationBackingUp = new NotificationContent
             {
                 Title = "Backing up...",
-                Message = $"Backup number: {++Properties.Settings.Default.backUpNum}",
+                Message = $"Backup number: {++backUpNum}",
                 Type = NotificationType.Information
             };
 
@@ -139,7 +139,7 @@ namespace BackUp
 
         private void WindowClose(object sender, MouseButtonEventArgs e)
         {
-            SaveSettings();
+            SettingsSave();
             Application.Current.Shutdown();
         }
 
@@ -213,7 +213,7 @@ namespace BackUp
             e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
         }
 
-        private void SaveSettings()
+        private void SettingsSave()
         {
             Properties.Settings.Default.source = txtBoxSource.Text;
             Properties.Settings.Default.destination = txtBoxDestination.Text;
@@ -228,16 +228,24 @@ namespace BackUp
             }
 
             Properties.Settings.Default.lastBackup = txtBoxLastBackup.Text;
+            Properties.Settings.Default.backUpNum = backUpNum;
 
             Properties.Settings.Default.Save();
         }
 
-        private void LoadSettings()
+        private void SettingsLoad()
         {
             txtBoxSource.Text = Properties.Settings.Default.source;
             txtBoxDestination.Text = Properties.Settings.Default.destination;
             txtBoxInterval.Text = Properties.Settings.Default.interval.ToString();
             txtBoxLastBackup.Text = Properties.Settings.Default.lastBackup;
+            backUpNum = Properties.Settings.Default.backUpNum;
+        }
+
+        private void SettingsMenuOpen(object sender, RoutedEventArgs e)
+        {
+            Settings settings = new Settings();
+            settings.Show();
         }
 
         private void IntervalUpdate(object sender, TextChangedEventArgs e)
@@ -253,5 +261,6 @@ namespace BackUp
                 lbIntervalCurrent.Content = $"Interval is now set to {txtBoxInterval.Text} seconds.";
             }
         }
+
     }
 }

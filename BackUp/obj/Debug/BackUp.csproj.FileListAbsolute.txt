@@ -34,3 +34,5 @@ D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp.csproj.CoreCompileInputs.cac
 D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp.csproj.CopyComplete
 D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp.exe
 D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp.pdb
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\Settings.g.cs
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\Settings.baml

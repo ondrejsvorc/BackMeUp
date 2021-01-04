@@ -191,5 +191,74 @@
             </Style.Triggers>
         </Style>
 
+        <!--  MenuItem  -->
+        <ControlTemplate x:Key="MenuItemSettings" TargetType="{x:Type MenuItem}">
+            <Border
+                x:Name="templateRoot"
+                Background="#FF707070"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                SnapsToDevicePixels="True">
+                <Grid VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ContentPresenter
+                        x:Name="Icon"
+                        Width="16"
+                        Height="16"
+                        Margin="3"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Content="{TemplateBinding Icon}"
+                        ContentSource="Icon"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    <Path
+                        x:Name="GlyphPanel"
+                        Margin="3"
+                        VerticalAlignment="Center"
+                        Data="F1M10,1.2L4.7,9.1 4.5,9.1 0,5.2 1.3,3.5 4.3,6.1 8.3,0 10,1.2z"
+                        Fill="#FF212121"
+                        FlowDirection="LeftToRight"
+                        Visibility="Collapsed" />
+                    <ContentPresenter
+                        Grid.Column="1"
+                        Margin="{TemplateBinding Padding}"
+                        Content="{TemplateBinding Header}"
+                        ContentSource="Header"
+                        ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                        ContentTemplate="{TemplateBinding HeaderTemplate}"
+                        RecognizesAccessKey="True"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Icon" Value="{x:Null}">
+                    <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+                </Trigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter TargetName="GlyphPanel" Property="Visibility" Value="Visible" />
+                    <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+                </Trigger>
+                <Trigger Property="IsHighlighted" Value="True">
+                    <Setter TargetName="templateRoot" Property="Background" Value="#3D26A0DA" />
+                    <Setter TargetName="templateRoot" Property="BorderBrush" Value="#FF26A0DA" />
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter TargetName="templateRoot" Property="TextElement.Foreground" Value="#FF707070" />
+                    <Setter TargetName="GlyphPanel" Property="Fill" Value="#FF707070" />
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsHighlighted" Value="True" />
+                        <Condition Property="IsEnabled" Value="False" />
+                    </MultiTrigger.Conditions>
+                    <Setter TargetName="templateRoot" Property="Background" Value="#0A000000" />
+                    <Setter TargetName="templateRoot" Property="BorderBrush" Value="#21000000" />
+                </MultiTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
     </Application.Resources>
 </Application>
