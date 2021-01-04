@@ -113,8 +113,10 @@ namespace BackUp
                 lbErrorMessage.Content = string.Empty;
             }
 
-            toggleBtnBackUpState.IsEnabled = inOrder;
-            toggleBtnBackUpState.IsChecked = inOrder;
+            // FIX THIS: BTN SHOULD BE DISABLED
+
+            //toggleBtnBackUpState.IsEnabled = inOrder;
+            //toggleBtnBackUpState.IsChecked = inOrder;
         }
 
         private void WindowShow(object sender, System.Windows.Forms.MouseEventArgs e)
