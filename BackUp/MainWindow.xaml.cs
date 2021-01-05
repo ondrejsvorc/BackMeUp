@@ -70,7 +70,7 @@ namespace BackUp
             notificationBackingUpFailure = new NotificationContent
             {
                 Title = "Backing up failed.",
-                Message = "Please, check whether the source and destination path exist.",
+                Message = "In order to fix it, open the app and see what's wrong.",
                 Type = NotificationType.Error
             };
 
@@ -113,17 +113,22 @@ namespace BackUp
                 lbErrorMessage.Content = string.Empty;
             }
 
-            // FIX THIS: BTN SHOULD BE DISABLED
-
-            //toggleBtnBackUpState.IsEnabled = inOrder;
-            //toggleBtnBackUpState.IsChecked = inOrder;
+            if (inOrder)
+            {
+                toggleBtnBackUpState.IsEnabled = true;
+            }
+            else
+            {
+                toggleBtnBackUpState.IsEnabled = false;
+                toggleBtnBackUpState.IsChecked = false;
+            }
         }
 
         private void WindowShow(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             this.Show();
             notifyIcon.Visible = false;
-            WindowState = WindowState.Normal;
+            this.WindowState = WindowState.Normal;
         }
 
         private void WindowMove(object sender, MouseButtonEventArgs e)
