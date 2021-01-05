@@ -57,7 +57,7 @@ namespace BackUp
             SettingsLoad();
 
             timerEverythingInOrder.Interval = TimeSpan.FromMilliseconds(100);
-            timerEverythingInOrder.Tick += IsEverythingInOrder;
+            timerEverythingInOrder.Tick += ArePathsOrIntervalValid;
             timerEverythingInOrder.Start();
 
             notificationBackingUp = new NotificationContent
@@ -81,7 +81,7 @@ namespace BackUp
             notifyIcon.MouseDoubleClick += WindowShow;
         }
 
-        private void IsEverythingInOrder(object sender, EventArgs e)
+        private void ArePathsOrIntervalValid(object sender, EventArgs e)
         {
             bool inOrder = true;
 
