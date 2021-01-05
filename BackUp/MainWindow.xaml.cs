@@ -26,15 +26,15 @@ namespace BackUp
         //TO-DO:
 
         /*
-         * TOAST NOTIFICATION
-         * MORE CONDITIONS
+         * TOAST NOTIFICATION - DONE
+         * MORE CONDITIONS - DONE
          * READONLY TXTBOXES - DONE
          * LABELS WITH CURRENT SETTINGS - KINDA DONE
-         * SAVING SETTINGS
+         * SAVING SETTINGS - KINDA DONE
          * REMOVE THE BUTTONS DOWN THERE - DONE
          * OPTIMISE GRID(S) - DONE
-         * AUTO-REFRESH INTERVAL (LB.CONTENT = INTERVAL CHANGED...)
-         * RUN IN BACKGROUND
+         * AUTO-REFRESH INTERVAL (LB.CONTENT = INTERVAL CHANGED...) - DONE
+         * RUN IN BACKGROUND - DONE
         */
 
         DispatcherTimer timerBackingUp = new DispatcherTimer();
