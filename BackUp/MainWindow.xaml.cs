@@ -122,6 +122,7 @@ namespace BackUp
                 toggleBtnBackUpState.IsEnabled = false;
                 toggleBtnBackUpState.IsChecked = false;
             }
+            
         }
 
         private void WindowShow(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -185,10 +186,11 @@ namespace BackUp
 
         private void BackUp(object sender, EventArgs e)
         {
-            string dirSource = txtBoxSource.Text;                                                           // Source path (what we are backing up)
-            string dirName = new DirectoryInfo(dirSource).Name;                                             // Name of the folder we are backing up
-            string dirDestination = txtBoxDestination.Text + $"\\{dirName}";                                // Destination path (where we are backing up)
-            string dirBackUpName = dirDestination + $" - {DateTime.Now:dd/MM/yy HH-mm-ss}";                 // Not yet existing path to a new folder where backup is located
+            string dirSource = txtBoxSource.Text;                                 // Source path (what we are backing up)
+            string dirName = new DirectoryInfo(dirSource).Name;                   // Name of the folder we are backing up
+            string dirDestination = txtBoxDestination.Text + $"\\{dirName}";      // Destination path (where we are backing up to)
+            string lastDateTime = $" - {DateTime.Now:dd/MM/yy HH-mm-ss}";           
+            string dirBackUpPath = dirDestination + lastDateTime;                 // Not yet existing path to a new folder where backup is located
 
             if (backingUp)
             {
@@ -196,10 +198,10 @@ namespace BackUp
                 {
                     notificationManager.Show(notificationBackingUp);
 
-                    txtBoxLastBackup.Text = dirName + $" - {DateTime.Now:dd/MM/yy HH-mm-ss}"; 
+                    txtBoxLastBackup.Text = dirName + lastDateTime; 
 
-                    Directory.CreateDirectory(dirBackUpName);
-                    Directory.SetCurrentDirectory(dirBackUpName);
+                    Directory.CreateDirectory(dirBackUpPath);
+                    Directory.SetCurrentDirectory(dirBackUpPath);
 
                     string[] files = Directory.GetFiles(dirSource, "*.*", SearchOption.AllDirectories);
 
@@ -234,7 +236,7 @@ namespace BackUp
                 Properties.Settings.Default.interval = 0;
             }
 
-            Properties.Settings.Default.lastBackup = txtBoxLastBackup.Text;
+            Properties.Settings.Default.lastBackupName = txtBoxLastBackup.Text;
             Properties.Settings.Default.backUpNum = backUpNum;
 
             Properties.Settings.Default.Save();
@@ -245,7 +247,7 @@ namespace BackUp
             txtBoxSource.Text = Properties.Settings.Default.source;
             txtBoxDestination.Text = Properties.Settings.Default.destination;
             txtBoxInterval.Text = Properties.Settings.Default.interval.ToString();
-            txtBoxLastBackup.Text = Properties.Settings.Default.lastBackup;
+            txtBoxLastBackup.Text = Properties.Settings.Default.lastBackupName;
             backUpNum = Properties.Settings.Default.backUpNum;
         }
 
@@ -268,6 +270,5 @@ namespace BackUp
                 lbIntervalCurrent.Content = $"Interval is now set to {txtBoxInterval.Text} seconds.";
             }
         }
-
     }
 }

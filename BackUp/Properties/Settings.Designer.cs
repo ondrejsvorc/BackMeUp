@@ -62,12 +62,12 @@ namespace BackUp.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string lastBackup {
+        public string lastBackupName {
             get {
-                return ((string)(this["lastBackup"]));
+                return ((string)(this["lastBackupName"]));
             }
             set {
-                this["lastBackup"] = value;
+                this["lastBackupName"] = value;
             }
         }
         

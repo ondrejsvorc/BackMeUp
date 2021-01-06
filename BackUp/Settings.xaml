@@ -23,7 +23,9 @@
         BorderThickness="2"
         CornerRadius="25"
         Opacity="0.9">
+
         <Grid />
 
     </Border>
+
 </Window>
