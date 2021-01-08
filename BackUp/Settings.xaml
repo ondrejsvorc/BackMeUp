@@ -14,7 +14,8 @@
     FontFamily="Microsoft YaHei Light"
     FontSize="16"
     Foreground="White"
-    MouseDown="WindowMove"
+    MouseDown="SettingsWindowMove"
+    WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
     <Border
@@ -24,7 +25,118 @@
         CornerRadius="25"
         Opacity="0.9">
 
-        <Grid />
+        <Grid ShowGridLines="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="340" />
+                <RowDefinition Height="100" />
+            </Grid.RowDefinitions>
+
+            <Ellipse
+                x:Name="ellipseClose"
+                Grid.Row="0"
+                Grid.Column="1"
+                Width="12"
+                Height="12"
+                Margin="0,0,25,0"
+                HorizontalAlignment="Right"
+                Fill="Red"
+                MouseDown="SettingsWindowClose" />
+
+            <Label
+                x:Name="lbHeading"
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="Settings"
+                FontSize="45"
+                Foreground="White" />
+
+            <StackPanel
+                Grid.Row="2"
+                Grid.Column="0"
+                Width="100"
+                Margin="0,0,0,-250"
+                Orientation="Vertical">
+
+                <Button
+                    x:Name="btnGeneral"
+                    Width="90"
+                    Height="30"
+                    Margin="0,10,0,0"
+                    Content="General"
+                    Foreground="White" />
+            </StackPanel>
+
+            <Button
+                Grid.Row="3"
+                Grid.Column="2"
+                Width="90"
+                Height="30"
+                Margin="0,2,10,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Click="SaveSettings"
+                Content="Save"
+                Foreground="White" />
+
+            <Grid
+                x:Name="gridGeneral"
+                Grid.Row="2"
+                Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="238" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="10" />
+                </Grid.RowDefinitions>
+
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Content="Start on computer startup"
+                    FontSize="14"
+                    Foreground="White" />
+
+                <CheckBox
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+
+                <Label
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Content="Start backing up on startup"
+                    FontSize="14"
+                    Foreground="White" />
+
+                <CheckBox
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+
+            </Grid>
+        </Grid>
+
 
     </Border>
 

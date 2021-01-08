@@ -15,6 +15,7 @@
     FontSize="16"
     Foreground="White"
     MouseDown="WindowMove"
+    WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
 

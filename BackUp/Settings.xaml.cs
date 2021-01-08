@@ -24,9 +24,23 @@ namespace BackUp
             InitializeComponent();
         }
 
-        private void WindowMove(object sender, MouseButtonEventArgs e)
+        private void SettingsWindowMove(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
         }
+
+        // User clicks "Cancel" or a cross
+        // FIX THIS
+        private void SettingsWindowClose(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void SaveSettings(object sender, RoutedEventArgs e)
+        {
+            //SOMEHOW CHANGE THE SETTINGS
+            this.Close();
+        }
+
     }
 }

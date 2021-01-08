@@ -140,7 +140,7 @@ namespace BackUp
         private void WindowMinimize(object sender, MouseButtonEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
-
+            
             this.Hide();
             notifyIcon.Visible = true;
         }
