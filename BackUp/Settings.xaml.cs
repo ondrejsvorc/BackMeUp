@@ -29,8 +29,6 @@ namespace BackUp
             this.DragMove();
         }
 
-        // User clicks "Cancel" or a cross
-        // FIX THIS
         private void SettingsWindowClose(object sender, MouseButtonEventArgs e)
         {
             this.Close();
@@ -38,9 +36,16 @@ namespace BackUp
 
         private void SaveSettings(object sender, RoutedEventArgs e)
         {
-            //SOMEHOW CHANGE THE SETTINGS
+            Properties.Settings.Default.checkBoxStartUp = (bool)checkBoxStartUp.IsChecked;
+            Properties.Settings.Default.checkBoxBackingUp = (bool)checkBoxBackingUp.IsChecked;
+
             this.Close();
         }
 
+        private void SettingsWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            checkBoxStartUp.IsChecked = Properties.Settings.Default.checkBoxStartUp;
+            checkBoxBackingUp.IsChecked = Properties.Settings.Default.checkBoxBackingUp;
+        }
     }
 }

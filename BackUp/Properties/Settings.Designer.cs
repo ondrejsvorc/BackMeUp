@@ -82,5 +82,29 @@ namespace BackUp.Properties {
                 this["backUpNum"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool checkBoxStartUp {
+            get {
+                return ((bool)(this["checkBoxStartUp"]));
+            }
+            set {
+                this["checkBoxStartUp"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool checkBoxBackingUp {
+            get {
+                return ((bool)(this["checkBoxBackingUp"]));
+            }
+            set {
+                this["checkBoxBackingUp"] = value;
+            }
+        }
     }
 }

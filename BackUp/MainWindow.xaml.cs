@@ -56,10 +56,21 @@ namespace BackUp
             InitializeComponent();
             SettingsLoad();
 
+            if (Properties.Settings.Default.checkBoxStartUp)
+            {
+                // MAKE THIS WORK
+            }
+
+            if (Properties.Settings.Default.checkBoxBackingUp)
+            {
+                // MAKE THIS WORK
+            }
+
             timerEverythingInOrder.Interval = TimeSpan.FromMilliseconds(100);
             timerEverythingInOrder.Tick += ArePathsOrIntervalValid;
             timerEverythingInOrder.Start();
 
+            // FIX BACKUP NUMBER
             notificationBackingUp = new NotificationContent
             {
                 Title = "Backing up...",
@@ -249,6 +260,19 @@ namespace BackUp
             txtBoxInterval.Text = Properties.Settings.Default.interval.ToString();
             txtBoxLastBackup.Text = Properties.Settings.Default.lastBackupName;
             backUpNum = Properties.Settings.Default.backUpNum;
+
+            // FIX IT
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window.GetType() == typeof(Settings))
+                {
+                    var windowSettings = ((Settings)window);
+
+                    windowSettings.checkBoxBackingUp.IsChecked = Properties.Settings.Default.checkBoxBackingUp;
+                    windowSettings.checkBoxStartUp.IsChecked = Properties.Settings.Default.checkBoxStartUp;
+                    break;
+                }
+            }
         }
 
         private void SettingsWindowOpen(object sender, RoutedEventArgs e)
