@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:BackUp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     x:Name="mainWindow"
     Title="Back me up"
     Width="800"
@@ -183,19 +184,17 @@
                     Content="Interval [s]:"
                     Foreground="White" />
 
-                <TextBox
-                    x:Name="txtBoxInterval"
+                <xctk:MaskedTextBox
+                    x:Name="maskedTxtBoxInterval"
                     Grid.Row="5"
                     Grid.Column="2"
-                    HorizontalContentAlignment="Left"
-                    VerticalContentAlignment="Center"
-                    Background="#FF707070"
+                    Background="#FF686868"
+                    FontSize="20"
                     Foreground="White"
-                    PreviewTextInput="AcceptOnlyNumbers"
-                    TextChanged="IntervalUpdate" />
+                    Mask="00:00:00" />
 
                 <Label
-                    x:Name="lbDirName"
+                    x:Name="lbLastBackup"
                     Grid.Row="7"
                     Grid.Column="1"
                     HorizontalAlignment="Left"
@@ -211,8 +210,7 @@
                     VerticalContentAlignment="Center"
                     Background="#FF707070"
                     Foreground="White"
-                    IsReadOnly="True"
-                    PreviewTextInput="AcceptOnlyNumbers" />
+                    IsReadOnly="True" />
 
                 <ToggleButton
                     x:Name="toggleBtnBackUpState"
@@ -231,7 +229,6 @@
                     Width="350"
                     HorizontalAlignment="Center"
                     HorizontalContentAlignment="Center"
-                    Content="Interval is now set to x seconds."
                     Foreground="White" />
 
                 <Label

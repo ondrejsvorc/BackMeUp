@@ -8,8 +8,8 @@
     <Setting Name="destination" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="interval" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="interval" Type="System.String" Scope="User">
+      <Value Profile="(Default)">__:__:__</Value>
     </Setting>
     <Setting Name="lastBackupName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

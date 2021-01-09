@@ -49,10 +49,10 @@ namespace BackUp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double interval {
+        [global::System.Configuration.DefaultSettingValueAttribute("__:__:__")]
+        public string interval {
             get {
-                return ((double)(this["interval"]));
+                return ((string)(this["interval"]));
             }
             set {
                 this["interval"] = value;

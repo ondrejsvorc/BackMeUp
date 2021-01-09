@@ -18,6 +18,7 @@ using System.Windows.Threading;
 using Notifications.Wpf;
 using System.Drawing;
 using System.Collections;
+using System.Windows.Controls.Primitives;
 
 namespace BackUp
 {
@@ -63,7 +64,7 @@ namespace BackUp
 
             if (Properties.Settings.Default.checkBoxBackingUp)
             {
-                // MAKE THIS WORK
+                StartBackingUp();
             }
 
             timerEverythingInOrder.Interval = TimeSpan.FromMilliseconds(100);
@@ -92,6 +93,7 @@ namespace BackUp
             notifyIcon.MouseDoubleClick += WindowShow;
         }
 
+
         private void ArePathsOrIntervalValid(object sender, EventArgs e)
         {
             bool inOrder = true;
@@ -113,13 +115,13 @@ namespace BackUp
                 inOrder = false;
             }
 
-            if (txtBoxInterval.Text == string.Empty)
+            if (!maskedTxtBoxInterval.IsMaskCompleted || !CheckIntervalValidity())
             {
                 lbErrorMessage.Content = "You must enter backing up INTERVAL.";
                 inOrder = false;
             }
 
-            if (Directory.Exists(txtBoxSource.Text) && Directory.Exists(txtBoxDestination.Text) && txtBoxInterval.Text != string.Empty)
+            if (Directory.Exists(txtBoxSource.Text) && Directory.Exists(txtBoxDestination.Text) && maskedTxtBoxInterval.IsMaskCompleted && CheckIntervalValidity())
             {
                 lbErrorMessage.Content = string.Empty;
             }
@@ -127,13 +129,47 @@ namespace BackUp
             if (inOrder)
             {
                 toggleBtnBackUpState.IsEnabled = true;
+                lbIntervalCurrent.Content = $"Interval is now set to {maskedTxtBoxInterval.Text}";
             }
             else
             {
                 toggleBtnBackUpState.IsEnabled = false;
                 toggleBtnBackUpState.IsChecked = false;
             }
-            
+        }
+
+        // 01234567
+        // 00:00:00
+        private bool CheckIntervalValidity()
+        {
+            bool result = true;
+
+            char[] secsMins = new char[]
+            {
+                maskedTxtBoxInterval.Text[3],
+                maskedTxtBoxInterval.Text[4],
+
+                maskedTxtBoxInterval.Text[6],
+                maskedTxtBoxInterval.Text[7]
+            };
+
+            for (int i = 0; i < secsMins.Length - 1; i += 2)
+            {
+                string charSum = Convert.ToString(secsMins[i]) + Convert.ToString(secsMins[i + 1]);          // '6' + '7' = '67'
+                int actualSum = Convert.ToInt32(charSum);                                                    // '67' to int
+
+                if (actualSum < 60)
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                    break;
+                }
+            }
+
+            return result;
         }
 
         private void WindowShow(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -178,20 +214,11 @@ namespace BackUp
         {
             if ((bool)toggleBtnBackUpState.IsChecked)
             {
-                backingUp = true;
-                timerBackingUp.Interval = TimeSpan.FromSeconds(Convert.ToDouble(txtBoxInterval.Text));
-                timerBackingUp.Start();
-
-                lbBackUpState.Content = "Backing up is now turned on";
-                toggleBtnBackUpState.Content = "Backup off";
+                StartBackingUp();
             }
             else
             {
-                backingUp = false;
-                timerBackingUp.Stop();
-
-                lbBackUpState.Content = "Backing up is now turned off";
-                toggleBtnBackUpState.Content = "Backup on";
+                StopBackingUp();
             }
         }
 
@@ -228,23 +255,47 @@ namespace BackUp
             }
         }
 
-        private void AcceptOnlyNumbers(object sender, TextCompositionEventArgs e)
+        private void StartBackingUp()
         {
-            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
+            toggleBtnBackUpState.IsChecked = true;
+
+            backingUp = true;
+            timerBackingUp.Interval = TimeSpan.Parse(maskedTxtBoxInterval.Text); /*TimeSpan.FromSeconds(Convert.ToDouble(maskedTxtBoxInterval.Text));*/
+            timerBackingUp.Start();
+
+            lbBackUpState.Content = "Backing up is now turned on";
+            toggleBtnBackUpState.Content = "Backup off";
         }
+
+        private void StopBackingUp()
+        {
+            toggleBtnBackUpState.IsChecked = false;
+
+            backingUp = false;
+            timerBackingUp.Stop();
+
+            lbBackUpState.Content = "Backing up is now turned off";
+            toggleBtnBackUpState.Content = "Backup on";
+        }
+
+
+        //private void AcceptOnlyNumbers(object sender, TextCompositionEventArgs e)
+        //{
+        //    e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
+        //}
 
         private void SettingsSave()
         {
             Properties.Settings.Default.source = txtBoxSource.Text;
             Properties.Settings.Default.destination = txtBoxDestination.Text;
 
-            if (txtBoxInterval.Text != string.Empty)
+            if (maskedTxtBoxInterval.Text != string.Empty)
             {
-                Properties.Settings.Default.interval = Convert.ToDouble(txtBoxInterval.Text);
+                Properties.Settings.Default.interval = maskedTxtBoxInterval.Text;
             }
             else
             {
-                Properties.Settings.Default.interval = 0;
+                Properties.Settings.Default.interval = "00:00:00";
             }
 
             Properties.Settings.Default.lastBackupName = txtBoxLastBackup.Text;
@@ -257,7 +308,7 @@ namespace BackUp
         {
             txtBoxSource.Text = Properties.Settings.Default.source;
             txtBoxDestination.Text = Properties.Settings.Default.destination;
-            txtBoxInterval.Text = Properties.Settings.Default.interval.ToString();
+            maskedTxtBoxInterval.Text = Properties.Settings.Default.interval.ToString();
             txtBoxLastBackup.Text = Properties.Settings.Default.lastBackupName;
             backUpNum = Properties.Settings.Default.backUpNum;
 
@@ -279,20 +330,6 @@ namespace BackUp
         {
             Settings settings = new Settings();
             settings.Show();
-        }
-
-        private void IntervalUpdate(object sender, TextChangedEventArgs e)
-        {
-            if ((bool)toggleBtnBackUpState.IsChecked)
-            {
-                lbIntervalCurrent.Content = "Updating interval...";
-            }
-
-            if (txtBoxInterval.Text != string.Empty)
-            {
-                timerBackingUp.Interval = TimeSpan.FromSeconds(Convert.ToDouble(txtBoxInterval.Text));
-                lbIntervalCurrent.Content = $"Interval is now set to {txtBoxInterval.Text} seconds.";
-            }
         }
     }
 }
