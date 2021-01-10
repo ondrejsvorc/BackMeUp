@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,8 +18,6 @@ namespace BackUp
 {
     public partial class Settings : Window
     {
-        // CONSTRUCTOR: REQUEST A LIST + MAKE A LIST OF XAML OBJECTS I'LL CREATE AND THEN HAVE A FOREACH TO LOOP THROUGH THEM --> X1 = Y1; X2 = Y2
-        // MAKE AN INTERFACE: REQUIRE METHODS?
 
         public Settings()
         {
@@ -36,7 +36,22 @@ namespace BackUp
 
         private void SaveSettings(object sender, RoutedEventArgs e)
         {
+            const string path = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+            RegistryKey regKey;
+
+            if ((bool)checkBoxStartUp.IsChecked)
+            {
+                regKey = Registry.CurrentUser.OpenSubKey(path, true);
+                regKey.SetValue("BackMeUp", Assembly.GetExecutingAssembly().Location.ToString());
+            }
+            else
+            {
+                regKey = Registry.CurrentUser.OpenSubKey(path, true);
+                regKey.DeleteValue("BackMeUp", false);
+            }
+
             Properties.Settings.Default.checkBoxStartUp = (bool)checkBoxStartUp.IsChecked;
+            Properties.Settings.Default.checkBoxMinimized = (bool)checkBoxMinimized.IsChecked;
             Properties.Settings.Default.checkBoxBackingUp = (bool)checkBoxBackingUp.IsChecked;
 
             this.Close();
@@ -45,6 +60,7 @@ namespace BackUp
         private void SettingsWindowLoaded(object sender, RoutedEventArgs e)
         {
             checkBoxStartUp.IsChecked = Properties.Settings.Default.checkBoxStartUp;
+            checkBoxMinimized.IsChecked = Properties.Settings.Default.checkBoxMinimized;
             checkBoxBackingUp.IsChecked = Properties.Settings.Default.checkBoxBackingUp;
         }
     }

@@ -128,13 +128,27 @@
                 <Label
                     Grid.Row="3"
                     Grid.Column="1"
+                    Content="Start minimized"
+                    FontSize="14"
+                    Foreground="White" />
+
+                <CheckBox
+                    x:Name="checkBoxMinimized"
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+
+                <Label
+                    Grid.Row="5"
+                    Grid.Column="1"
                     Content="Start backing up on automatically"
                     FontSize="14"
                     Foreground="White" />
 
                 <CheckBox
                     x:Name="checkBoxBackingUp"
-                    Grid.Row="3"
+                    Grid.Row="5"
                     Grid.Column="2"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center" />

@@ -106,5 +106,17 @@ namespace BackUp.Properties {
                 this["checkBoxBackingUp"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool checkBoxMinimized {
+            get {
+                return ((bool)(this["checkBoxMinimized"]));
+            }
+            set {
+                this["checkBoxMinimized"] = value;
+            }
+        }
     }
 }

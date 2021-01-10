@@ -43,7 +43,7 @@ namespace BackUp
 
         FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
 
-        NotifyIcon notifyIcon;
+        NotifyIcon notifyIcon = new NotifyIcon();
 
         NotificationManager notificationManager = new NotificationManager();
         NotificationContent notificationBackingUp;
@@ -54,13 +54,11 @@ namespace BackUp
 
         public MainWindow()
         {
+            SetWindowState();
             InitializeComponent();
             SettingsLoad();
 
-            if (Properties.Settings.Default.checkBoxStartUp)
-            {
-                // MAKE THIS WORK
-            }
+            lbIntervalCurrent.Content = $"Interval is now set to {maskedTxtBoxInterval.Text}";
 
             if (Properties.Settings.Default.checkBoxBackingUp)
             {
@@ -88,11 +86,20 @@ namespace BackUp
 
             timerBackingUp.Tick += BackUp;
 
-            notifyIcon = new NotifyIcon();
             notifyIcon.Icon = Properties.Resources.BackMeUp_Icon;
             notifyIcon.MouseDoubleClick += WindowShow;
         }
 
+        private void SetWindowState()
+        {
+            if (Properties.Settings.Default.checkBoxMinimized)
+            {
+                this.WindowState = WindowState.Minimized;
+
+                this.Hide();
+                notifyIcon.Visible = true;
+            }
+        }
 
         private void ArePathsOrIntervalValid(object sender, EventArgs e)
         {
@@ -117,7 +124,7 @@ namespace BackUp
 
             if (!maskedTxtBoxInterval.IsMaskCompleted || !CheckIntervalValidity())
             {
-                lbErrorMessage.Content = "You must enter backing up INTERVAL.";
+                lbErrorMessage.Content = "You must enter a valid INTERVAL.";
                 inOrder = false;
             }
 
@@ -155,8 +162,8 @@ namespace BackUp
 
             for (int i = 0; i < secsMins.Length - 1; i += 2)
             {
-                string charSum = Convert.ToString(secsMins[i]) + Convert.ToString(secsMins[i + 1]);          // '6' + '7' = '67'
-                int actualSum = Convert.ToInt32(charSum);                                                    // '67' to int
+                string charSum = secsMins[i].ToString() + secsMins[i + 1].ToString();          // '6' + '7' = '67'
+                int actualSum = Convert.ToInt32(charSum);                                      // '67' to int
 
                 if (actualSum < 60)
                 {
@@ -260,7 +267,7 @@ namespace BackUp
             toggleBtnBackUpState.IsChecked = true;
 
             backingUp = true;
-            timerBackingUp.Interval = TimeSpan.Parse(maskedTxtBoxInterval.Text); /*TimeSpan.FromSeconds(Convert.ToDouble(maskedTxtBoxInterval.Text));*/
+            timerBackingUp.Interval = TimeSpan.Parse(maskedTxtBoxInterval.Text);
             timerBackingUp.Start();
 
             lbBackUpState.Content = "Backing up is now turned on";
@@ -277,12 +284,6 @@ namespace BackUp
             lbBackUpState.Content = "Backing up is now turned off";
             toggleBtnBackUpState.Content = "Backup on";
         }
-
-
-        //private void AcceptOnlyNumbers(object sender, TextCompositionEventArgs e)
-        //{
-        //    e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
-        //}
 
         private void SettingsSave()
         {
@@ -312,7 +313,6 @@ namespace BackUp
             txtBoxLastBackup.Text = Properties.Settings.Default.lastBackupName;
             backUpNum = Properties.Settings.Default.backUpNum;
 
-            // FIX IT
             foreach (Window window in Application.Current.Windows)
             {
                 if (window.GetType() == typeof(Settings))
@@ -320,6 +320,7 @@ namespace BackUp
                     var windowSettings = ((Settings)window);
 
                     windowSettings.checkBoxBackingUp.IsChecked = Properties.Settings.Default.checkBoxBackingUp;
+                    windowSettings.checkBoxMinimized.IsChecked = Properties.Settings.Default.checkBoxMinimized;
                     windowSettings.checkBoxStartUp.IsChecked = Properties.Settings.Default.checkBoxStartUp;
                     break;
                 }
