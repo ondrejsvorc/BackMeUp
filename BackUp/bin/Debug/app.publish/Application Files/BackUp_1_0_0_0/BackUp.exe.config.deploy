@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+        <sectionGroup name="userSettings" type="System.Configuration.UserSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
+            <section name="BackUp.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" allowExeDefinition="MachineToLocalUser" requirePermission="false" />
+        </sectionGroup>
+    </configSections>
+    <startup> 
+        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7.2" />
+    </startup>
+    <userSettings>
+        <BackUp.Properties.Settings>
+            <setting name="source" serializeAs="String">
+                <value />
+            </setting>
+            <setting name="destination" serializeAs="String">
+                <value />
+            </setting>
+            <setting name="interval" serializeAs="String">
+                <value>__:__:__</value>
+            </setting>
+            <setting name="lastBackupName" serializeAs="String">
+                <value />
+            </setting>
+            <setting name="backUpNum" serializeAs="String">
+                <value>0</value>
+            </setting>
+            <setting name="checkBoxStartUp" serializeAs="String">
+                <value>False</value>
+            </setting>
+            <setting name="checkBoxBackingUp" serializeAs="String">
+                <value>False</value>
+            </setting>
+            <setting name="checkBoxMinimized" serializeAs="String">
+                <value>False</value>
+            </setting>
+        </BackUp.Properties.Settings>
+    </userSettings>
+</configuration>

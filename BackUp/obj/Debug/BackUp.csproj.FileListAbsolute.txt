@@ -53,3 +53,8 @@ D:\GitHub Projects\BackMeUp\BackUp\bin\Debug\ro\Xceed.Wpf.AvalonDock.resources.d
 D:\GitHub Projects\BackMeUp\BackUp\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
 D:\GitHub Projects\BackMeUp\BackUp\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
 D:\GitHub Projects\BackMeUp\BackUp\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+D:\GitHub Projects\BackMeUp\BackUp\bin\Debug\BackUp.exe.manifest
+D:\GitHub Projects\BackMeUp\BackUp\bin\Debug\BackUp.application
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp.TrustInfo.xml
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp.exe.manifest
+D:\GitHub Projects\BackMeUp\BackUp\obj\Debug\BackUp.application

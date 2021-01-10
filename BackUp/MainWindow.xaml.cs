@@ -13,12 +13,9 @@ using TextBox = System.Windows.Controls.TextBox;
 using Button = System.Windows.Controls.Button;
 using MessageBox = System.Windows.MessageBox;
 using Application = System.Windows.Application;
-using System.Text.RegularExpressions;
 using System.Windows.Threading;
 using Notifications.Wpf;
-using System.Drawing;
-using System.Collections;
-using System.Windows.Controls.Primitives;
+
 
 namespace BackUp
 {
@@ -73,7 +70,6 @@ namespace BackUp
             notificationBackingUp = new NotificationContent
             {
                 Title = "Backing up...",
-                Message = $"Backup number: {++backUpNum}",
                 Type = NotificationType.Information
             };
 
@@ -241,6 +237,7 @@ namespace BackUp
             {
                 if (Directory.Exists(dirSource))
                 {
+                    notificationBackingUp.Message = $"Backup number: {++backUpNum}";
                     notificationManager.Show(notificationBackingUp);
 
                     txtBoxLastBackup.Text = dirName + lastDateTime; 
