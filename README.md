@@ -18,3 +18,9 @@ BackMeUp is a free backup software that enables you to make automatic backups of
 * Automatic and immediate detection of errors
 * Backing up interval that can be set up to 100 hours (approx. 4 days)
 * User settings
+
+![](https://github.com/ondrejsvorc/BackMeUp/blob/main/ReadMe%20Pictures/mainWindow.PNG)
+
+<p align="center">
+  <img src="https://github.com/ondrejsvorc/BackMeUp/blob/main/ReadMe%20Pictures/settingsWindow.PNG"/>
+</p>
