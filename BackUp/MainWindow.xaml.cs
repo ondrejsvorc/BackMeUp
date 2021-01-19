@@ -120,9 +120,30 @@ namespace BackUp
 
             if (!maskedTxtBoxInterval.IsMaskCompleted || !CheckIntervalValidity())
             {
+                foreach (Window window in Application.Current.Windows)
+                {
+                    if (window.GetType() == typeof(Settings))
+                    {
+                        ((Settings)window).checkBoxBackingUp.IsEnabled = false;
+                        break;
+                    }
+                }
+
                 lbErrorMessage.Content = "You must enter a valid INTERVAL.";
                 inOrder = false;
             }
+            else
+            {
+                foreach (Window window in Application.Current.Windows)
+                {
+                    if (window.GetType() == typeof(Settings))
+                    {
+                        ((Settings)window).checkBoxBackingUp.IsEnabled = true;
+                        break;
+                    }
+                }
+            }
+
 
             if (Directory.Exists(txtBoxSource.Text) && Directory.Exists(txtBoxDestination.Text) && maskedTxtBoxInterval.IsMaskCompleted && CheckIntervalValidity())
             {
