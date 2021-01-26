@@ -23,3 +23,6 @@ BackMeUp is a free backup software that enables you to make automatic backups of
    <img src="https://github.com/ondrejsvorc/BackMeUp/blob/main/ReadMe%20Pictures/mainWindow.PNG"/>
   <img src="https://github.com/ondrejsvorc/BackMeUp/blob/main/ReadMe%20Pictures/settingsWindow.PNG"/>
 </p>
+
+## Video
+[![](https://img.youtube.com/vi/kLAIa1leyfA/0.jpg)](https://youtu.be/kLAIa1leyfA)
