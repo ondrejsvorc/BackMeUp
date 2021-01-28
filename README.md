@@ -1,6 +1,6 @@
-# BackMeUp 1.0
+# BackMeUp 1.0.0.1
 
-## Download [here](https://www.mediafire.com/file/hw6ufri2cn75mek/BackMeUp_1.0.rar/file).
+## Download [here](https://www.mediafire.com/file/b687rn908qrhha3/BackMeUp_1.0.0.1.rar/file). (Last version update: 19.01.2021)
 
 BackMeUp is a free backup software that enables you to make automatic backups of data in equally spaced intervals.
 
@@ -23,3 +23,6 @@ BackMeUp is a free backup software that enables you to make automatic backups of
    <img src="https://github.com/ondrejsvorc/BackMeUp/blob/main/ReadMe%20Pictures/mainWindow.PNG"/>
   <img src="https://github.com/ondrejsvorc/BackMeUp/blob/main/ReadMe%20Pictures/settingsWindow.PNG"/>
 </p>
+
+## Video
+[![](https://img.youtube.com/vi/kLAIa1leyfA/0.jpg)](https://youtu.be/kLAIa1leyfA)
