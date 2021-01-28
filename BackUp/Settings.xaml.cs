@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -54,13 +55,31 @@ namespace BackUp
             Properties.Settings.Default.checkBoxMinimized = (bool)checkBoxMinimized.IsChecked;
             Properties.Settings.Default.checkBoxBackingUp = (bool)checkBoxBackingUp.IsChecked;
 
+            Properties.Settings.Default.Save();
+
             this.Close();
         }
 
-        private void SettingsWindowLoaded(object sender, RoutedEventArgs e)
+        private void SettingsLoad(object sender, RoutedEventArgs e)
         {
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+
             checkBoxStartUp.IsChecked = Properties.Settings.Default.checkBoxStartUp;
             checkBoxMinimized.IsChecked = Properties.Settings.Default.checkBoxMinimized;
+
+            if (Properties.Settings.Default.checkBoxBackingUp && (!Directory.Exists(mainWindow.txtBoxSource.Text) || !Directory.Exists(mainWindow.txtBoxDestination.Text) || !mainWindow.maskedTxtBoxInterval.IsMaskFull || !mainWindow.CheckIntervalValidity()))
+            {
+                Properties.Settings.Default.checkBoxBackingUp = !Properties.Settings.Default.checkBoxBackingUp;
+                checkBoxBackingUp.IsEnabled = false;
+            }
+            else
+            {
+                if (!checkBoxBackingUp.IsEnabled)
+                {
+                    checkBoxBackingUp.IsEnabled = true;
+                }
+            }
+
             checkBoxBackingUp.IsChecked = Properties.Settings.Default.checkBoxBackingUp;
         }
     }

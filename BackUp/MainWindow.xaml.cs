@@ -1,72 +1,59 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Forms;
-using TextBox = System.Windows.Controls.TextBox;
-using Button = System.Windows.Controls.Button;
-using MessageBox = System.Windows.MessageBox;
-using Application = System.Windows.Application;
 using System.Windows.Threading;
+using Application = System.Windows.Application;
 using Notifications.Wpf;
-
+using MessageBox = System.Windows.MessageBox;
 
 namespace BackUp
 {
     public partial class MainWindow : Window
     {
-        //TO-DO:
+        private DispatcherTimer timerBackingUp;
+        private DispatcherTimer timerEverythingInOrder;
 
-        /*
-         * TOAST NOTIFICATION - DONE
-         * MORE CONDITIONS - DONE
-         * READONLY TXTBOXES - DONE
-         * LABELS WITH CURRENT SETTINGS - DONE
-         * SAVING SETTINGS - DONE
-         * REMOVE THE BUTTONS DOWN THERE - DONE
-         * OPTIMISE GRID(S) - DONE
-         * AUTO-REFRESH INTERVAL (LB.CONTENT = INTERVAL CHANGED...) - DONE
-         * RUN IN BACKGROUND - DONE
-        */
+        private FolderBrowserDialog folderBrowserDialog;
 
-        DispatcherTimer timerBackingUp = new DispatcherTimer();
-        DispatcherTimer timerEverythingInOrder = new DispatcherTimer();
+        private NotifyIcon notifyIcon;
 
-        FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+        private NotificationManager notificationManager;
+        private NotificationContent notificationBackingUp;
+        private NotificationContent notificationBackingUpFailure;
 
-        NotifyIcon notifyIcon = new NotifyIcon();
-
-        NotificationManager notificationManager = new NotificationManager();
-        NotificationContent notificationBackingUp;
-        NotificationContent notificationBackingUpFailure;
-
-        bool backingUp;
-        int backUpNum = 0;
+        private bool backingUp;
+        private int backUpNum;
 
         public MainWindow()
         {
+            notifyIcon = new NotifyIcon();
+
             SetWindowState();
             InitializeComponent();
-            SettingsLoad();
+            LocalSettingsLoad();
+
+            backUpNum = 0;
+
+            timerBackingUp = new DispatcherTimer();
+            timerEverythingInOrder = new DispatcherTimer();
+
+            timerEverythingInOrder.Interval = TimeSpan.FromMilliseconds(50);
+            timerEverythingInOrder.Tick += ArePathsOrIntervalValid;
+            timerEverythingInOrder.Start();
+
+            folderBrowserDialog = new FolderBrowserDialog();
+
+            notificationManager = new NotificationManager();
 
             lbIntervalCurrent.Content = $"Interval is now set to {maskedTxtBoxInterval.Text}";
 
-            if (Properties.Settings.Default.checkBoxBackingUp)
+            if (Properties.Settings.Default.checkBoxBackingUp && Directory.Exists(txtBoxSource.Text) && Directory.Exists(txtBoxDestination.Text) && maskedTxtBoxInterval.IsMaskFull && CheckIntervalValidity())
             {
                 StartBackingUp();
             }
 
-            timerEverythingInOrder.Interval = TimeSpan.FromMilliseconds(100);
-            timerEverythingInOrder.Tick += ArePathsOrIntervalValid;
-            timerEverythingInOrder.Start();
-
-            // FIX BACKUP NUMBER
             notificationBackingUp = new NotificationContent
             {
                 Title = "Backing up...",
@@ -93,6 +80,7 @@ namespace BackUp
                 this.WindowState = WindowState.Minimized;
 
                 this.Hide();
+
                 notifyIcon.Visible = true;
             }
         }
@@ -120,30 +108,9 @@ namespace BackUp
 
             if (!maskedTxtBoxInterval.IsMaskCompleted || !CheckIntervalValidity())
             {
-                foreach (Window window in Application.Current.Windows)
-                {
-                    if (window.GetType() == typeof(Settings))
-                    {
-                        ((Settings)window).checkBoxBackingUp.IsEnabled = false;
-                        break;
-                    }
-                }
-
                 lbErrorMessage.Content = "You must enter a valid INTERVAL.";
                 inOrder = false;
             }
-            else
-            {
-                foreach (Window window in Application.Current.Windows)
-                {
-                    if (window.GetType() == typeof(Settings))
-                    {
-                        ((Settings)window).checkBoxBackingUp.IsEnabled = true;
-                        break;
-                    }
-                }
-            }
-
 
             if (Directory.Exists(txtBoxSource.Text) && Directory.Exists(txtBoxDestination.Text) && maskedTxtBoxInterval.IsMaskCompleted && CheckIntervalValidity())
             {
@@ -164,7 +131,7 @@ namespace BackUp
 
         // 01234567
         // 00:00:00
-        private bool CheckIntervalValidity()
+        public bool CheckIntervalValidity()
         {
             bool result = true;
 
@@ -218,7 +185,7 @@ namespace BackUp
 
         private void WindowClose(object sender, MouseButtonEventArgs e)
         {
-            SettingsSave();
+            LocalSettingsSave();
             Application.Current.Shutdown();
         }
 
@@ -285,6 +252,7 @@ namespace BackUp
             toggleBtnBackUpState.IsChecked = true;
 
             backingUp = true;
+
             timerBackingUp.Interval = TimeSpan.Parse(maskedTxtBoxInterval.Text);
             timerBackingUp.Start();
 
@@ -303,12 +271,12 @@ namespace BackUp
             toggleBtnBackUpState.Content = "Backup on";
         }
 
-        private void SettingsSave()
+        private void LocalSettingsSave()
         {
             Properties.Settings.Default.source = txtBoxSource.Text;
             Properties.Settings.Default.destination = txtBoxDestination.Text;
 
-            if (maskedTxtBoxInterval.Text != string.Empty)
+            if (!string.IsNullOrWhiteSpace(maskedTxtBoxInterval.Text))
             {
                 Properties.Settings.Default.interval = maskedTxtBoxInterval.Text;
             }
@@ -323,26 +291,13 @@ namespace BackUp
             Properties.Settings.Default.Save();
         }
 
-        private void SettingsLoad()
+        private void LocalSettingsLoad()
         {
             txtBoxSource.Text = Properties.Settings.Default.source;
             txtBoxDestination.Text = Properties.Settings.Default.destination;
             maskedTxtBoxInterval.Text = Properties.Settings.Default.interval.ToString();
             txtBoxLastBackup.Text = Properties.Settings.Default.lastBackupName;
             backUpNum = Properties.Settings.Default.backUpNum;
-
-            foreach (Window window in Application.Current.Windows)
-            {
-                if (window.GetType() == typeof(Settings))
-                {
-                    var windowSettings = ((Settings)window);
-
-                    windowSettings.checkBoxBackingUp.IsChecked = Properties.Settings.Default.checkBoxBackingUp;
-                    windowSettings.checkBoxMinimized.IsChecked = Properties.Settings.Default.checkBoxMinimized;
-                    windowSettings.checkBoxStartUp.IsChecked = Properties.Settings.Default.checkBoxStartUp;
-                    break;
-                }
-            }
         }
 
         private void SettingsWindowOpen(object sender, RoutedEventArgs e)

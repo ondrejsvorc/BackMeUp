@@ -14,7 +14,7 @@
     FontFamily="Microsoft YaHei Light"
     FontSize="16"
     Foreground="White"
-    Loaded="SettingsWindowLoaded"
+    Loaded="SettingsLoad"
     MouseDown="SettingsWindowMove"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
@@ -77,6 +77,7 @@
             </StackPanel>
 
             <Button
+                x:Name="btnSave"
                 Grid.Row="3"
                 Grid.Column="2"
                 Width="90"
