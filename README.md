@@ -4,7 +4,7 @@
 
 BackMeUp is a free backup software that enables you to make automatic backups of data in equally spaced intervals.
 
-## External libraries
+## `External libraries`
 
 | Library  | Used for |
 | ------------- | ------------- |
@@ -12,7 +12,7 @@ BackMeUp is a free backup software that enables you to make automatic backups of
 | [Extended WPF toolkit](https://github.com/xceedsoftware/wpftoolkit/) | MaskedTextBox for interval input |
 
 
-## Main features
+## `Main features`
 
 * Backing up a folder (and its subfolders) locally or to external cloud services (such as OneDrive)
 * Automatic and immediate detection of errors
@@ -24,5 +24,5 @@ BackMeUp is a free backup software that enables you to make automatic backups of
   <img src="https://github.com/ondrejsvorc/BackMeUp/blob/main/ReadMe%20Pictures/settingsWindow.PNG"/>
 </p>
 
-## Video
+## `Video`
 [![](https://img.youtube.com/vi/kLAIa1leyfA/0.jpg)](https://youtu.be/kLAIa1leyfA)
